@@ -8,18 +8,18 @@ namespace InventoryManager
 {
     internal class Product
     {
-        public string name { get; set; }
-        public decimal price { get; set; }
-        public int quantity { get; set; }
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+        public int Quantity { get; set; }
         
 
 
 
         public Product(string Name, decimal Price, int Quantity)
         {
-            name = Name;
-            price = Price;
-            quantity = Quantity;
+            this.Name = Name;
+            this.Price = Price;
+            this.Quantity = Quantity;
         }
     }
 }

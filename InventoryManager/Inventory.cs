@@ -150,7 +150,7 @@ namespace InventoryManager
         
 
 
-        public void mostValuableProduct()
+        public void MostValuableProduct()
         {
             decimal HighestValue = _inventory[0].Price;
 

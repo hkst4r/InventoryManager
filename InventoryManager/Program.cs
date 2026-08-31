@@ -34,20 +34,20 @@ namespace InventoryManager {
                         break;
 
                     case "3":
-                        manager.updateProductStock();
+                        manager.UpdateProductStock();
                         Console.WriteLine("Press any key to return back to menu");
                         Console.ReadLine();
                         break;
 
                     case "4":
-                        manager.removeProduct();
+                        manager.RemoveProduct();
                         Console.WriteLine("Press any key to return back to menu");
                         Console.ReadLine();
                         break;
 
 
                     case "5":
-                        manager.mostValuableProduct();
+                        manager.MostValuableProduct();
                         Console.WriteLine("Press any key to return back to menu");
                         Console.ReadLine();
                         break;

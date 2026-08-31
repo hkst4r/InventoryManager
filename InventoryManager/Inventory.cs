@@ -152,14 +152,29 @@ namespace InventoryManager
 
         public void MostValuableProduct()
         {
-            decimal HighestValue = _inventory[0].Price;
-
-            foreach (Product inv in _inventory)
+            if(_inventory.Count > 0)
             {
-                if (inv.Price > HighestValue)
+
+                decimal highestValue = (_inventory[0].Price * _inventory[0].Quantity);
+                Product highestValueProduct = _inventory[0];
+                foreach (Product inv in _inventory)
                 {
-                    HighestValue = inv.Price;
+                    decimal productValue = (inv.Price * inv.Quantity);
+                    if (productValue > highestValue)
+                    {
+                        highestValue = productValue;
+                        highestValueProduct = inv;
+                    }
+
                 }
+
+                Console.WriteLine($"Product with highest value:{highestValueProduct.Name}");
+                Console.WriteLine($"Total value: {highestValue}");
+            }
+
+            else
+            {
+                Console.WriteLine("Inventory is empty");
             }
         
         

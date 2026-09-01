@@ -11,28 +11,30 @@ namespace InventoryManager
 
         public List<Product> _inventory = new List<Product>();
 
-        public void AddToInventory()
+        public void AddToInventory(string name, decimal price, int amount)
         {
-            Console.Write("Name: ");
-            string Name = Console.ReadLine()??"";
-            if (string.IsNullOrWhiteSpace(Name))
+
+
+            if (string.IsNullOrWhiteSpace(name))
             {
-                Console.WriteLine("Please enter a valid string");
+                Console.WriteLine("Please enter a valid string.");
                 return;
             }
 
-            Console.Write("Price: ");
-            if (decimal.TryParse(Console.ReadLine(), out decimal Price) == false)
+            if(price <= 0)
             {
-                Console.WriteLine("Please enter a valid decimal");
+                Console.WriteLine("Price should be greater than 0.");
                 return;
             }
 
-            Console.Write("Amount: ");
-            if (int.TryParse(Console.ReadLine(), out int Amount))
+            if(amount <= 0)
             {
-                _inventory.Add(new Product(Name, Price, Amount));
+                Console.WriteLine("Amount should be greater than 0.");
+                return;
             }
+
+            _inventory.Add(new Product(name, price, amount));
+            
 
             
 
@@ -54,6 +56,8 @@ namespace InventoryManager
                 Console.WriteLine($"Total stock value: {stockValue}\n\n");
 
                 totalValue += stockValue;
+                Thread.Sleep(300);
+
 
             }
 

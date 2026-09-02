@@ -84,7 +84,7 @@
 
 
                     case "6":
-                            Console.WriteLine("Exitting...");
+                            Console.WriteLine("Exiting...");
                             Thread.Sleep(1000);
                             return;
 

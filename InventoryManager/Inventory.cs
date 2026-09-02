@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace InventoryManager
 {
-    internal class Inventory
+    public class Inventory
     {
 
-        public List<Product> _inventory = new List<Product>();
+        private readonly List<Product> _inventory = new List<Product>();
+        public IReadOnlyList<Product> Products => _inventory;
 
         public void AddToInventory(string name, decimal price, int amount)
         {

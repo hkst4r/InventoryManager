@@ -12,29 +12,30 @@ namespace InventoryManager
         private readonly List<Product> _inventory = new List<Product>();
         public IReadOnlyList<Product> Products => _inventory;
 
-        public void AddToInventory(string name, decimal price, int amount)
+        public bool AddToInventory(string name, decimal price, int amount)
         {
 
 
             if (string.IsNullOrWhiteSpace(name))
             {
                 Console.WriteLine("Please enter a valid string.");
-                return;
+                return false;
             }
 
             if(price <= 0)
             {
                 Console.WriteLine("Price should be greater than 0.");
-                return;
+                return false;
             }
 
             if(amount <= 0)
             {
                 Console.WriteLine("Amount should be greater than 0.");
-                return;
+                return false;
             }
 
             _inventory.Add(new Product(name, price, amount));
+            return true;
             
 
             

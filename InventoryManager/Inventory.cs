@@ -46,16 +46,15 @@ namespace InventoryManager
 
         public void ViewProducts()
         {
-            Console.WriteLine("---Inventory---\n\n");
             decimal totalValue = 0;
 
             foreach (Product i in _inventory)
             {
                 Console.WriteLine($"Product: {i.Name}");
-                Console.WriteLine($"Price: EUR{i.Price}");
+                Console.WriteLine($"Price: EUR {i.Price}");
                 Console.WriteLine($"Quantity: {i.Quantity}");
                 decimal stockValue = i.Price * i.Quantity;
-                Console.WriteLine($"Total stock value: {stockValue}\n\n");
+                Console.WriteLine($"Total stock value: EUR {stockValue}\n\n");
 
                 totalValue += stockValue;
                 Thread.Sleep(300);
@@ -68,42 +67,36 @@ namespace InventoryManager
         }
 
 
-        public void UpdateProductStock()
+        public bool UpdateProductStock(string name, int newQuantity)
         {
-
-            Console.Write("Enter product name:");
-            string productToUpdate = Console.ReadLine()??"";
-
-            foreach(Product p in _inventory)
+            if(string.IsNullOrWhiteSpace(name))
             {
-                if (p.Name.ToLower() == productToUpdate.ToLower())
-                {
-                    Console.WriteLine($"Current quantity for {p.Name}: {p.Quantity}");
-                    Console.Write("Enter new quantity: ");
-
-
-                    if (int.TryParse(Console.ReadLine(), out int updateQuantity) && updateQuantity >= 0)
-                    {
-                        p.Quantity = updateQuantity;
-                        Console.WriteLine("Quantity updated successfully");
-                        
-                    }
-
-                    else
-                    {
-                        Console.WriteLine("Quantity is invalid");
-                    }
-
-
-                    return;
-
-                }
+                Console.WriteLine("Please enter a valid string.");
+                return false;
             }
 
-            Console.WriteLine("Product not found");
-            return;
+            if (newQuantity <= 0)
+            {
+                Console.WriteLine("Quantity should be greater than 0.");
+                return false;
+            }
 
-  
+            foreach (Product p in Products)
+            {
+                if (p.Name.ToLower() == name.ToLower())
+                {
+                    p.Quantity = newQuantity;
+                    Console.WriteLine($"{name} quantity successfully updated.");
+                    return true;
+
+                }
+
+            }
+
+            Console.WriteLine($"{name} not found.");
+            return false;
+
+
 
         }
 

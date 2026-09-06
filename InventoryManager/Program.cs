@@ -58,13 +58,33 @@
 
 
                     case "2":
+                        Console.WriteLine("---Inventory---\n\n");
                         manager.ViewProducts();
                         Console.WriteLine("Press any key to return back to menu");
                         Console.ReadKey(true);
                         break;
 
                     case "3":
-                        manager.UpdateProductStock();
+                        Console.WriteLine("---Updating Products---");
+
+                        Console.WriteLine("\n---Current Products---\n");
+                        manager.ViewProducts();
+
+                        Console.Write("\nEnter product name to update: ");
+                        string productToUpdate = Console.ReadLine() ?? "";
+
+                        Console.Write("Enter new quantity: ");
+                        string quantity = Console.ReadLine() ?? "";
+
+
+                        
+                        if (!int.TryParse(quantity, out int updateQuantity))
+                        {
+                            Console.WriteLine("Quantity is invalid, please enter a valid integer");
+                            break;
+                        }
+
+                        manager.UpdateProductStock(productToUpdate, updateQuantity);
                         Console.WriteLine("Press any key to return back to menu");
                         Console.ReadKey(true);
                         break;

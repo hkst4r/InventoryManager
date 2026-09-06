@@ -90,14 +90,27 @@
                         break;
 
                     case "4":
-                        manager.RemoveProduct();
+                        Console.WriteLine("---Inventory---");
+                        manager.ViewProducts();
+
+                        Console.Write("\n\nEnter the product name you want to remove:");
+                        string toRemove = Console.ReadLine() ?? "";
+                        manager.RemoveProduct(toRemove);
+                        
                         Console.WriteLine("Press any key to return back to menu");
                         Console.ReadKey(true);
                         break;
 
 
                     case "5":
-                        manager.MostValuableProduct();
+                        Console.WriteLine("---Most valuable product---");
+                        Product? highestValue = manager.MostValuableProduct();
+                        if (highestValue != null)
+                        {
+                            Console.WriteLine($"\nMost valuable product: {highestValue.Name} with a total value of EUR {highestValue.Price*highestValue.Quantity}");
+                            break;
+                        }
+
                         Console.WriteLine("Press any key to return back to menu");
                         Console.ReadKey(true);
                         break;

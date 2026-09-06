@@ -100,20 +100,17 @@ namespace InventoryManager
 
         }
 
-        public void RemoveProduct()
+        public bool RemoveProduct(string toRemove)
         {
-            int count = 1;
-            Console.WriteLine("--- Product List ---\n");
-            foreach(Product i in _inventory)
+            
+            if (string.IsNullOrWhiteSpace(toRemove))
             {
-                Console.WriteLine($"{count}. {i.Name}");
-                count += 1;
+                Console.WriteLine("Invalid input");
+                return false;
             }
 
 
-
-            Console.Write("\n\nEnter the product name you want to remove:");
-            string toRemove = Console.ReadLine() ?? "";
+            
 
             Product? productToRemove = null;
 
@@ -122,7 +119,7 @@ namespace InventoryManager
                 if (product.Name.Equals(toRemove, StringComparison.OrdinalIgnoreCase))
                 {
                     productToRemove = product;
-                    break;                    
+                         
 
                 }
 
@@ -133,12 +130,15 @@ namespace InventoryManager
             if (productToRemove != null)
             {
                 _inventory.Remove(productToRemove);
+                Console.WriteLine($"{productToRemove.Name} successfully removed");
+                return true;
             }
 
 
             else
             {
                 Console.WriteLine("Product not found or invalid input");
+                return false;
 
             }
 
@@ -149,31 +149,30 @@ namespace InventoryManager
         
 
 
-        public void MostValuableProduct()
+        public Product? MostValuableProduct()
         {
             if(_inventory.Count > 0)
             {
 
                 decimal highestValue = (_inventory[0].Price * _inventory[0].Quantity);
                 Product highestValueProduct = _inventory[0];
-                foreach (Product inv in _inventory)
+                foreach (Product prd in _inventory)
                 {
-                    decimal productValue = (inv.Price * inv.Quantity);
+                    decimal productValue = (prd.Price * prd.Quantity);
                     if (productValue > highestValue)
                     {
                         highestValue = productValue;
-                        highestValueProduct = inv;
+                        highestValueProduct = prd;
                     }
 
                 }
 
-                Console.WriteLine($"Product with highest value:{highestValueProduct.Name}");
-                Console.WriteLine($"Total value: {highestValue}");
+                return highestValueProduct;
             }
 
             else
             {
-                Console.WriteLine("Inventory is empty");
+                return null;
             }
         
         

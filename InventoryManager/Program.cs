@@ -13,7 +13,9 @@
                 Console.WriteLine("3. Update Product Stock");
                 Console.WriteLine("4. Remove Product");
                 Console.WriteLine("5. View Most Valuable Product");
-                Console.WriteLine("6. Exit");
+                Console.WriteLine("6. View Products Under a Certain Stock Threshold");
+                Console.WriteLine("7. View Products In Descending Order");
+                Console.WriteLine("8. Exit");
                 Console.Write("\n\nEnter selection: ");
 
 
@@ -108,23 +110,72 @@
                         if (highestValue != null)
                         {
                             Console.WriteLine($"\nMost valuable product: {highestValue.Name} with a total value of EUR {highestValue.Price*highestValue.Quantity}");
-                            break;
                         }
 
                         Console.WriteLine("Press any key to return back to menu");
                         Console.ReadKey(true);
                         break;
 
-
                     case "6":
+                        if (manager.Products.Count == 0)
+                        {
+                            Console.WriteLine("List is empty");
+                            break;
+
+                        }
+
+                        Console.Write("Enter threshold: ");
+
+                        if (!int.TryParse(Console.ReadLine(), out int thres))
+                        {
+                            Console.WriteLine("Enter a valid integer.");
+                            break;
+                        }
+
+
+                        List <Product> lowStockProducts = manager.GetLowStockProducts(thres);
+                        Console.WriteLine($"---Products with a stock less than {thres}. --- ");
+                        foreach (Product p in lowStockProducts)
+                        {
+                            Console.WriteLine($"{p.Name} - Quantity: {p.Quantity}");
+
+                        }
+
+                        break;
+
+                    case "7":
+                        if (manager.Products.Count == 0)
+                        {
+                            Console.WriteLine("List is empty");
+                            break;
+                        }
+
+
+                        else
+                        {
+                            Console.WriteLine("---Products in Descending Order---");
+                            List<Product> sortedProducts = manager.GetProductsByValue();
+                            foreach (Product n in sortedProducts)
+                            {
+                                Console.WriteLine(n.Name);
+                            }
+                            break;
+                        }
+                        
+
+
+                    case "8":
                             Console.WriteLine("Exiting...");
                             Thread.Sleep(1000);
                             return;
 
 
+                    
+
+
                     default:
 
-                        Console.WriteLine("Enter a valid input between 1 and 6. ");
+                        Console.WriteLine("Enter a valid input between 1 and 8. ");
                         break;
 
 

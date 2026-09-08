@@ -16,11 +16,21 @@ namespace InventoryManager
         {
 
 
+
+
             if (string.IsNullOrWhiteSpace(name))
             {
                 Console.WriteLine("Please enter a valid string.");
                 return false;
             }
+            bool exists = _inventory.Any(prd => prd.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+
+            if (exists)
+            {
+                Console.WriteLine("Item already in list");
+                return false;
+            }
+            
 
             if(price <= 0)
             {
@@ -81,17 +91,15 @@ namespace InventoryManager
                 return false;
             }
 
-            foreach (Product p in Products)
-            {
-                if (p.Name.ToLower() == name.ToLower())
-                {
-                    p.Quantity = newQuantity;
-                    Console.WriteLine($"{name} quantity successfully updated.");
-                    return true;
+             Product? productToUpdate = _inventory.FirstOrDefault(product => product.Name.Equals(name, StringComparison.OrdinalIgnoreCase)) ;//linq
 
-                }
+             if (productToUpdate != null)
+            {
+                productToUpdate.Quantity = newQuantity;
+                return true;
 
             }
+
 
             Console.WriteLine($"{name} not found.");
             return false;
@@ -176,6 +184,22 @@ namespace InventoryManager
             }
         
         
+        }
+
+
+        public List <Product> GetLowStockProducts(int threshold)
+        {
+            
+            var results = _inventory.Where(product => (product.Quantity < threshold)).ToList();
+            return results;
+        }
+
+
+        public List <Product> GetProductsByValue()
+        {
+            var results = _inventory.OrderByDescending(prd => prd.Price * prd.Quantity).ToList();
+            return results;
+
         }
     }
 }

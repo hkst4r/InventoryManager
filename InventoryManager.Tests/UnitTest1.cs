@@ -89,14 +89,17 @@ namespace InventoryManager.Tests
             Assert.False(inventory.UpdateProductStock("", 2));
         }
 
-        [Fact]
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-2)]
+        [InlineData(-100)]      
 
-        public void Quantity0OrLess_UpdateProductStock_ReturnsFalse()
+        public void Quantity0OrLess_UpdateProductStock_ReturnsFalse(int quantity)
         {
             Inventory inventory = new Inventory();
             inventory.AddToInventory("rysten", 2, 2);
-            Assert.False(inventory.UpdateProductStock("rysten", 0));
-            Assert.False(inventory.UpdateProductStock("rysten", -2));
+            Assert.False(inventory.UpdateProductStock("rysten", quantity));
+           
 
             Assert.Equal(2, inventory.Products[0].Quantity);
         }
@@ -158,6 +161,71 @@ namespace InventoryManager.Tests
         {
             Inventory inventory = new Inventory();
             Assert.Null(inventory.MostValuableProduct());
+        }
+
+
+        [Fact]
+
+        public void GetLowStockProduct_ReturnsCorrectProducts()
+        {
+            Inventory inventory = new Inventory();
+            inventory.AddToInventory("mouse", 20, 2);
+            inventory.AddToInventory("laptop", 20, 20);
+            inventory.AddToInventory("socks", 20, 5);
+            inventory.AddToInventory("mat", 20, 1);
+            inventory.AddToInventory("cupboard", 20, 4);
+
+            List<Product> result = inventory.GetLowStockProducts(6);
+
+            Assert.Equal(4, result.Count);
+            Assert.Equal("mouse", result[0].Name);
+            Assert.Equal("socks", result[1].Name);
+            Assert.Equal("mat", result[2].Name);
+            Assert.Equal("cupboard", result[3].Name);
+
+
+
+
+        }
+
+        [Fact]
+
+        public void DuplicateProductsNotAdded()
+        {
+            Inventory inventory = new Inventory();
+            inventory.AddToInventory("rysten", 2, 2);
+
+            Assert.False(inventory.AddToInventory("rysten", 2, 2));
+            Assert.Single(inventory.Products);
+
+            Assert.False(inventory.AddToInventory("RySteN", 2, 2));
+            Assert.Single(inventory.Products);
+            
+
+        }
+
+        [Fact]
+        public void GetProductsByValue_ReturnsCorrectProducts()
+        {
+            Inventory inventory = new Inventory();
+            inventory.AddToInventory("mouse", 20, 2);//40
+            inventory.AddToInventory("laptop", 500, 4);//2000
+            inventory.AddToInventory("socks", 7, 6);//42
+            inventory.AddToInventory("mat", 20, 1);//20
+            inventory.AddToInventory("cupboard", 200, 1);//200
+
+            List<Product> result = inventory.GetProductsByValue();
+
+            Assert.Equal(5, result.Count);
+            Assert.Equal("laptop", result[0].Name);
+            Assert.Equal("cupboard", result[1].Name);
+            Assert.Equal("socks", result[2].Name);
+            Assert.Equal("mouse", result[3].Name);
+            Assert.Equal("mat", result[4].Name);
+
+
+
+
         }
 
 

@@ -120,19 +120,21 @@ namespace InventoryManager
 
             
 
-            Product? productToRemove = null;
+            Product? productToRemove = _inventory.FirstOrDefault(p => p.Name.Equals(toRemove, StringComparison.OrdinalIgnoreCase));
 
-            foreach (Product product in _inventory)
-            {
-                if (product.Name.Equals(toRemove, StringComparison.OrdinalIgnoreCase))
-                {
-                    productToRemove = product;
+            //replacing this
+
+            //foreach (Product product in _inventory)
+            //{
+            //    if (product.Name.Equals(toRemove, StringComparison.OrdinalIgnoreCase))
+            //    {
+            //        productToRemove = product;
                          
 
-                }
+            //    }
 
 
-            }
+            //}
 
 
             if (productToRemove != null)
@@ -200,6 +202,14 @@ namespace InventoryManager
             var results = _inventory.OrderByDescending(prd => prd.Price * prd.Quantity).ToList();
             return results;
 
+        }
+
+
+        public List<string> GetProductNames()
+        {
+            var names = _inventory.Select(p => p.Name).ToList();
+            return names;
+            
         }
     }
 }

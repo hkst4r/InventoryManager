@@ -229,6 +229,31 @@ namespace InventoryManager.Tests
         }
 
 
+        [Fact]
+        public void GetProductNames_ReturnsStrings()
+        {
+            Inventory inventory = new Inventory();
+            inventory.AddToInventory("mouse", 20, 2);
+            inventory.AddToInventory("laptop", 500, 4);
+            inventory.AddToInventory("socks", 7, 6);
+            inventory.AddToInventory("mat", 20, 1);
+            inventory.AddToInventory("cupboard", 200, 1);
+
+            List<string> result = inventory.GetProductNames();
+
+            Assert.Equal(5, result.Count);
+            Assert.Equal("mouse", result[0]);
+            Assert.Equal("laptop", result[1]);
+            Assert.Equal("socks", result[2]);
+            Assert.Equal("mat", result[3]);
+            Assert.Equal("cupboard", result[4]);
+
+
+
+
+        }
+
+
 
 
 

@@ -15,7 +15,8 @@
                 Console.WriteLine("5. View Most Valuable Product");
                 Console.WriteLine("6. View Products Under a Certain Stock Threshold");
                 Console.WriteLine("7. View Products In Descending Order");
-                Console.WriteLine("8. Exit");
+                Console.WriteLine("8. View Product Names");
+                Console.WriteLine("9. Exit");
                 Console.Write("\n\nEnter selection: ");
 
 
@@ -165,17 +166,25 @@
 
 
                     case "8":
-                            Console.WriteLine("Exiting...");
-                            Thread.Sleep(1000);
-                            return;
+
+                            Console.WriteLine("---Product Names---");
+                            List<string> productNames = manager.GetProductNames();
+                            foreach (string n in productNames)
+                        {
+                            Console.WriteLine(n);
+                        }
+                            break;
 
 
-                    
+                    case "9":
+                        Console.WriteLine("Exiting...");
+                        Thread.Sleep(1000);
+                        return;
 
 
                     default:
 
-                        Console.WriteLine("Enter a valid input between 1 and 8. ");
+                        Console.WriteLine("Enter a valid input between 1 and 9. ");
                         break;
 
 
